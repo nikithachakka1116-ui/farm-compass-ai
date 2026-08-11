@@ -10,33 +10,84 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as CropsRouteImport } from './routes/crops'
+import { Route as FieldsRouteImport } from './routes/fields'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ScanRouteImport } from './routes/scan'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CropsRoute = CropsRouteImport.update({
+  id: '/crops',
+  path: '/crops',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FieldsRoute = FieldsRouteImport.update({
+  id: '/fields',
+  path: '/fields',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScanRoute = ScanRouteImport.update({
+  id: '/scan',
+  path: '/scan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/crops': typeof CropsRoute
+  '/fields': typeof FieldsRoute
+  '/profile': typeof ProfileRoute
+  '/scan': typeof ScanRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/crops': typeof CropsRoute
+  '/fields': typeof FieldsRoute
+  '/profile': typeof ProfileRoute
+  '/scan': typeof ScanRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/crops': typeof CropsRoute
+  '/fields': typeof FieldsRoute
+  '/profile': typeof ProfileRoute
+  '/scan': typeof ScanRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/calendar' | '/crops' | '/fields' | '/profile' | '/scan'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/calendar' | '/crops' | '/fields' | '/profile' | '/scan'
+  id:
+    '__root__' | '/' | '/calendar' | '/crops' | '/fields' | '/profile' | '/scan'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
+  CropsRoute: typeof CropsRoute
+  FieldsRoute: typeof FieldsRoute
+  ProfileRoute: typeof ProfileRoute
+  ScanRoute: typeof ScanRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +99,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crops': {
+      id: '/crops'
+      path: '/crops'
+      fullPath: '/crops'
+      preLoaderRoute: typeof CropsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fields': {
+      id: '/fields'
+      path: '/fields'
+      fullPath: '/fields'
+      preLoaderRoute: typeof FieldsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scan': {
+      id: '/scan'
+      path: '/scan'
+      fullPath: '/scan'
+      preLoaderRoute: typeof ScanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
+  CropsRoute: CropsRoute,
+  FieldsRoute: FieldsRoute,
+  ProfileRoute: ProfileRoute,
+  ScanRoute: ScanRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
