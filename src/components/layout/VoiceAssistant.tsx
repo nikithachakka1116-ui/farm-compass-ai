@@ -32,7 +32,7 @@ export function VoiceAssistant({ open, onClose }: { open: boolean; onClose: () =
 
   const speak = () => {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      const u = new SpeechSynthesisUtterance(samples[pick].a);
+      const u = new SpeechSynthesisUtterance(samples[pick]!.a);
       window.speechSynthesis.speak(u);
     }
   };
@@ -81,7 +81,7 @@ export function VoiceAssistant({ open, onClose }: { open: boolean; onClose: () =
         {state === "answer" && (
           <div className="mt-5 rounded-2xl bg-success-soft p-4 ring-1 ring-success/25">
             <SourceTag kind="ai" />
-            <p className="mt-2 text-sm leading-relaxed">{samples[pick].a}</p>
+            <p className="mt-2 text-sm leading-relaxed">{samples[pick]!.a}</p>
             <button
               type="button"
               onClick={speak}
